@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace AvaloniaApp;
 
-public sealed partial class ProtectionRemoveViewModel : ProtectionViewModel
+public sealed class ProtectionRemoveViewModel : ProtectionViewModel
 {
     internal override OperationType Operation => OperationType.Unprotect;
 

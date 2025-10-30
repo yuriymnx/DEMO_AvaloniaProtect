@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace AvaloniaApp;
 
-public abstract partial class ProtectionViewModel : ObservableObject
+public abstract class ProtectionViewModel : ObservableObject
 {
     protected readonly System.Collections.ObjectModel.ObservableCollection<IFileItem> FileItems = new();
     private readonly IDialogsServiceInner _dialogsService;
@@ -14,14 +14,22 @@ public abstract partial class ProtectionViewModel : ObservableObject
     /// <summary>
     /// Заменить исходные файлы после снятия защиты
     /// </summary>
-    [ObservableProperty]
-    private bool overwrite = true;
+    private bool _overwrite = true;
+    public bool Overwrite
+    {
+        get => _overwrite;
+        set => SetProperty(ref _overwrite, value);
+    }
 
     /// <summary>
     /// Сохранить файлы в
     /// </summary>
-    [ObservableProperty]
-    private string? destination;
+    private string? _destination;
+    public string? Destination
+    {
+        get => _destination;
+        set => SetProperty(ref _destination, value);
+    }
 
     public ICommand AddFileCommand { get; }
 

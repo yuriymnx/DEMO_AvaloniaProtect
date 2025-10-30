@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Windows.Input;
 
 namespace AvaloniaApp;
-public partial class ProtectionApplyViewModel : ProtectionViewModel
+public class ProtectionApplyViewModel : ProtectionViewModel
 {
     internal override OperationType Operation => OperationType.Protect;
 
@@ -19,17 +19,33 @@ public partial class ProtectionApplyViewModel : ProtectionViewModel
     private readonly List<TemplateInfo> _templates;
     private readonly List<UiRight> _rights;
 
-    [ObservableProperty]
     private UiProtectionType _selectedProtectionType;
+    public UiProtectionType SelectedProtectionType
+    {
+        get => _selectedProtectionType;
+        set => SetProperty(ref _selectedProtectionType, value);
+    }
 
-    [ObservableProperty]
     private TemplateInfo? _selectedTemplateInfo;
+    public TemplateInfo? SelectedTemplateInfo
+    {
+        get => _selectedTemplateInfo;
+        set => SetProperty(ref _selectedTemplateInfo, value);
+    }
 
-    [ObservableProperty]
     private DateTime? _validTo;
+    public DateTime? ValidTo
+    {
+        get => _validTo;
+        set => SetProperty(ref _validTo, value);
+    }
 
-    [ObservableProperty]
     private IEnumerable<string>? _userEmails;
+    public IEnumerable<string>? UserEmails
+    {
+        get => _userEmails;
+        set => SetProperty(ref _userEmails, value);
+    }
 
     public ICommand ProtectCommand { get; }
 
@@ -115,15 +131,23 @@ public partial class ProtectionApplyViewModel : ProtectionViewModel
 
     public record UiProtectionType(string VisualName, ProtectionType Type);
 
-    public partial class UiRight : ObservableObject, IUiRight
+    public class UiRight : ObservableObject, IUiRight
     {
         public string VisualName { get; }
         public string RightName { get; }
         public string Tooltip { get; }
         public bool IsRequired { get; }
 
-        [ObservableProperty]
-        private bool isChecked;
+        private bool _isChecked;
+        public bool IsChecked
+        {
+            get => _isChecked;
+            set
+            {
+                var coerced = IsRequired && value == false ? true : value;
+                SetProperty(ref _isChecked, coerced);
+            }
+        }
 
         public UiRight(string visualName, string rightName, string tooltip, bool isRequired = false, bool isChecked = false)
         {
@@ -134,11 +158,7 @@ public partial class ProtectionApplyViewModel : ProtectionViewModel
             IsChecked = isChecked;
         }
 
-        partial void OnIsCheckedChanged(bool value)
-        {
-            if (IsRequired && value == false)
-                IsChecked = true;
-        }
+        // Validation is handled in IsChecked setter to avoid partial methods
     }
 
     public class TemplateInfo

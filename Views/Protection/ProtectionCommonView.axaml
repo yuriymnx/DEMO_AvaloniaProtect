@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:v="using:AvaloniaApp.Views.Protection"
+             x:Class="AvaloniaApp.Views.Protection.ProtectionCommonView">
+  <StackPanel Margin="12" Spacing="8">
+    <TextBlock Text="{Binding OperationName}" FontWeight="Bold" FontSize="16" />
+
+    <TextBlock Text="Files" FontWeight="Bold" />
+    <StackPanel Orientation="Horizontal" Spacing="8">
+      <Button Content="Add file" Command="{Binding AddFileCommand}" />
+      <Button Content="Clear files" Command="{Binding ClearFilesCommand}" />
+    </StackPanel>
+    <ItemsControl ItemsSource="{Binding Files}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <TextBlock Text="{Binding Name}" />
+            <TextBlock Text="-" />
+            <TextBlock Text="{Binding FullPath}" />
+          </StackPanel>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <ContentPresenter Content="{Binding Child, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+
+    <StackPanel Orientation="Horizontal" Spacing="8">
+      <CheckBox Content="Overwrite" IsChecked="{Binding Overwrite}" />
+      <TextBlock Text="Destination:" VerticalAlignment="Center" />
+      <TextBox Text="{Binding Destination}" Width="300" />
+    </StackPanel>
+  </StackPanel>
+</UserControl>
+
+

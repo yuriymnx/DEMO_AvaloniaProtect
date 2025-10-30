@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:v="using:AvaloniaApp.Views.Protection"
+             x:Class="AvaloniaApp.Views.Protection.ProtectionApplyView"
+             >
+  <v:ProtectionCommonView>
+    <v:ProtectionCommonView.Child>
+      <StackPanel Spacing="8">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="Protection type:" VerticalAlignment="Center" />
+        <ComboBox ItemsSource="{Binding ProtectionTypes}"
+                  SelectedItem="{Binding SelectedProtectionType}"
+                  Width="250">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding VisualName}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="Template:" VerticalAlignment="Center" />
+        <ComboBox ItemsSource="{Binding Templates}"
+                  SelectedItem="{Binding SelectedTemplateInfo}"
+                  Width="250">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding TemplateVisualName}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <TextBlock Text="Valid to:" VerticalAlignment="Center" />
+        <DatePicker SelectedDate="{Binding ValidTo}" />
+      </StackPanel>
+      <StackPanel>
+        <TextBlock Text="Rights" FontWeight="Bold" />
+        <ItemsControl ItemsSource="{Binding Rights}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding VisualName}" />
+                <TextBlock Text="?" ToolTip.Tip="{Binding Tooltip}" />
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <Button Content="Protect" Command="{Binding ProtectCommand}" />
+        </StackPanel>
+      </StackPanel>
+    </v:ProtectionCommonView.Child>
+  </v:ProtectionCommonView>
+</UserControl>
+
+
